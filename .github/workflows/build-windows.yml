@@ -26,37 +26,56 @@ jobs:
     
     - name: Build Windows executable
       run: |
-        python -m PyInstaller --onefile --windowed --name="朗润播放器客户端_独立版" 朗润播放器客户端_独立版.py
+        python -m PyInstaller --onefile --windowed --name="LangrunPlayer" 朗润播放器客户端_独立版.py
     
     - name: Create release package
       run: |
-        mkdir "朗润播放器客户端_独立版_Windows发布包"
-        copy "dist\朗润播放器客户端_独立版.exe" "朗润播放器客户端_独立版_Windows发布包\"
+        mkdir "LangrunPlayer_Windows_Release"
+        copy "dist\LangrunPlayer.exe" "LangrunPlayer_Windows_Release\"
         
-        echo @echo off > "朗润播放器客户端_独立版_Windows发布包\启动朗润播放器.bat"
-        echo chcp 65001 ^> nul >> "朗润播放器客户端_独立版_Windows发布包\启动朗润播放器.bat"
-        echo echo 正在启动朗润播放器客户端... >> "朗润播放器客户端_独立版_Windows发布包\启动朗润播放器.bat"
-        echo "朗润播放器客户端_独立版.exe" >> "朗润播放器客户端_独立版_Windows发布包\启动朗润播放器.bat"
-        echo pause >> "朗润播放器客户端_独立版_Windows发布包\启动朗润播放器.bat"
+        echo @echo off > "LangrunPlayer_Windows_Release\start_player.bat"
+        echo chcp 65001 ^> nul >> "LangrunPlayer_Windows_Release\start_player.bat"
+        echo echo Starting Langrun Player... >> "LangrunPlayer_Windows_Release\start_player.bat"
+        echo echo 正在启动朗润播放器客户端... >> "LangrunPlayer_Windows_Release\start_player.bat"
+        echo LangrunPlayer.exe >> "LangrunPlayer_Windows_Release\start_player.bat"
+        echo pause >> "LangrunPlayer_Windows_Release\start_player.bat"
         
-        echo 展演号码,姓名,作品名称,媒体链接 > "朗润播放器客户端_独立版_Windows发布包\数据模板.csv"
-        echo 001,张三,春天的故事,http://example.com/media1.mp3 >> "朗润播放器客户端_独立版_Windows发布包\数据模板.csv"
+        echo 展演号码,姓名,作品名称,媒体链接 > "LangrunPlayer_Windows_Release\data_template.csv"
+        echo 001,张三,春天的故事,http://example.com/media1.mp3 >> "LangrunPlayer_Windows_Release\data_template.csv"
+        echo 002,李四,夏日风情,http://example.com/media2.mp4 >> "LangrunPlayer_Windows_Release\data_template.csv"
+        echo 003,王五,秋天的童话,http://example.com/media3.mp3 >> "LangrunPlayer_Windows_Release\data_template.csv"
         
-        mkdir "朗润播放器客户端_独立版_Windows发布包\downloaded_media"
+        mkdir "LangrunPlayer_Windows_Release\downloaded_media"
+        
+        echo Langrun Player - Windows Version User Guide > "LangrunPlayer_Windows_Release\README.txt"
+        echo 朗润播放器客户端 - Windows版使用说明 >> "LangrunPlayer_Windows_Release\README.txt"
+        echo. >> "LangrunPlayer_Windows_Release\README.txt"
+        echo Features: No Python installation required, portable software, double-click to run >> "LangrunPlayer_Windows_Release\README.txt"
+        echo 特点：无需安装Python环境，绿色软件，双击即用 >> "LangrunPlayer_Windows_Release\README.txt"
+        echo. >> "LangrunPlayer_Windows_Release\README.txt"
+        echo Usage: >> "LangrunPlayer_Windows_Release\README.txt"
+        echo 使用方法： >> "LangrunPlayer_Windows_Release\README.txt"
+        echo 1. Double-click to run LangrunPlayer.exe >> "LangrunPlayer_Windows_Release\README.txt"
+        echo 1. 双击运行LangrunPlayer.exe >> "LangrunPlayer_Windows_Release\README.txt"
+        echo 2. Click Import CSV File to select data file >> "LangrunPlayer_Windows_Release\README.txt"
+        echo 2. 点击"导入CSV文件"选择数据文件 >> "LangrunPlayer_Windows_Release\README.txt"
+        echo 3. Click Start Download to download media files >> "LangrunPlayer_Windows_Release\README.txt"
+        echo 3. 点击"开始下载"下载媒体文件 >> "LangrunPlayer_Windows_Release\README.txt"
+        echo 4. Enter performance number to search or double-click list to play >> "LangrunPlayer_Windows_Release\README.txt"
+        echo 4. 输入展演号码搜索或双击列表播放 >> "LangrunPlayer_Windows_Release\README.txt"
     
     - name: Upload Windows build
       uses: actions/upload-artifact@v4
       with:
-        name: 朗润播放器客户端_独立版_Windows
-        path: 朗润播放器客户端_独立版_Windows发布包/
+        name: LangrunPlayer_Windows_Release
+        path: LangrunPlayer_Windows_Release/
     
     - name: Create ZIP package
       run: |
-        powershell Compress-Archive -Path "朗润播放器客户端_独立版_Windows发布包" -DestinationPath "朗润播放器客户端_独立版_Windows_v1.0.zip"
+        powershell Compress-Archive -Path "LangrunPlayer_Windows_Release" -DestinationPath "LangrunPlayer_Windows_v1.0.zip"
     
     - name: Upload ZIP package
       uses: actions/upload-artifact@v4
       with:
-        name: 朗润播放器客户端_独立版_Windows_ZIP
-        path: 朗润播放器客户端_独立版_Windows_v1.0.zip 
-        
+        name: LangrunPlayer_Windows_ZIP
+        path: LangrunPlayer_Windows_v1.0.zip 
