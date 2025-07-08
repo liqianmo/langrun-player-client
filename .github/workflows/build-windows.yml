@@ -29,6 +29,7 @@ jobs:
         python -m PyInstaller --onefile --windowed --name="LangrunPlayer" 朗润播放器客户端_独立版.py
     
     - name: Create release package
+      shell: cmd
       run: |
         mkdir "LangrunPlayer_Windows_Release"
         copy "dist\LangrunPlayer.exe" "LangrunPlayer_Windows_Release\"
